@@ -11,8 +11,9 @@ export default function Payments() {
         <div>
             <h2>Payments</h2>
             {debts.map(d => (
-                <div key={d.id}>
-                    {d.amount} - {d.status}
+                <div className = "card" key={d.id}>
+                    <strong>{d.amount} </strong>
+                    <p>Status: {d.status}</p>
                 </div>
             ))}
         </div>

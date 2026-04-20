@@ -11,8 +11,10 @@ export default function Tasks() {
         <div>
             <h2>Tasks</h2>
             {tasks.map(t => (
-                <div key={t.id}>
-                    {t.title} - {t.status}
+                <div className="card" key={t.id}>
+                    <strong>{t.title}</strong>
+                    <p>Status: {t.status}</p>
+                    
                 </div>
             ))}
         </div>
