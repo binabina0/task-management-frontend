@@ -8,10 +8,10 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const {token} = useContext(AuthContext);
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         if(token) navigate("/");
-    }, [token]);
+    }, []);
 
     const handleLogin = async () => {
         try {

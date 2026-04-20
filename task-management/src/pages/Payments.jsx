@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import Navbar from "../components/Navbar";
 
 export default function Payments() {
     const [debts, setDepts] = useState([]);
     useEffect(() => {
         api.get("/payments/my")
-        .then(res => setDepts(res.data));
+        .then(res => {
+            console.log(res.data);
+            setDepts(res.data.data)})
+            .catch(() => alert("Error loading paymanets"));
     }, []);
     return (
+        <>
+        <Navbar/>
         <div>
             <h2>Payments</h2>
             {debts.map(d => (
@@ -17,5 +23,7 @@ export default function Payments() {
                 </div>
             ))}
         </div>
+        </>
+        
     );
 }
