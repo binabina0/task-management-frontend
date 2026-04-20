@@ -11,6 +11,8 @@ export default function Navbar() {
       <Link to="/" style={{ marginRight: 10, color: "white" }}>Dashboard</Link>
       <Link to="/tasks" style={{ marginRight: 10, color: "white" }}>Tasks</Link>
       <Link to="/payments" style={{ marginRight: 10, color: "white" }}>Payments</Link>
+      <Link to="/create-task" style={{ marginRight: 10, color: "white" }}>+ Task</Link>
+      <Link to="/create-payment" style={{ marginRight: 10, color: "white" }}>+ Payment</Link>
 
       <button onClick={logout} style={{ float: "right" }}>
         Logout
