@@ -30,3 +30,8 @@ input {
   margin: 8px 0;
   padding: 8px;
 }
+select {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+}

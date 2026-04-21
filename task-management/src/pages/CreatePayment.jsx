@@ -1,22 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../api/api";
 import Navbar from "../components/Navbar";
 
 export default function CreatePayment() {
-    const [groupId, setGroupId] = useState("");
+    const [groups, setGroups] = useState([]);
+    const [members, setMembers] = useState([]);
     const [amount, setAmount] = useState("");
     const [description, setDescription] = useState("");
-    const [participants, setParticipants] = useState("");
+    const [groupId, setGroupId] = useState("");
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    useEffect(() => {
+        api.get("/groups/my")
+        .then(res => setGroups(res.data.data))
+    }, []);
+    useEffect(() => {
+        if (!groupId) return;   
+        api.get(`/groups/${groupId}/members`)
+        .then(res => setMembers(res.data.data))
+    }, [groupId]);
+    const toggleUser = (id) => {
+        setSelectedUsers(prev =>
+            prev.includes(id)
+            ? prev.filter(u => u !== id)
+            : [...prev, id]
+        );
+    };
     const handleSubmit = async () => {
-        const ids = participants.split(",").map(id => id.trim());
         try {
             await api.post("/payments", {
                 groupId,
                 amount,
                 description,
-                participantIds: ids
+                participantsIds: selectedUsers
             });
-            alert("Payment added");
+            alert("Payment created");
         } catch (e) {
             alert("Error adding payment");
         }
@@ -26,10 +43,28 @@ export default function CreatePayment() {
             <Navbar />
             <div className="container">
                 <h2>Create Payment</h2>
-                <input placeholder="Group ID" onChange={e => setGroupId(e.target.value)} />
                 <input placeholder="Amount" onChange={e => setAmount(e.target.value)} />
                 <input placeholder="Description" onChange={e => setDescription(e.target.value)} />
-                <input placeholder="Participants IDs (comma separated)" onChange={e => setParticipants(e.target.value)} />
+                <select onChange={e => setGroupId(e.target.value)}> 
+                    <option>Select Group</option>
+                    {groups.map(g =>
+                        <option key={g.id} value={g.id}>{g.name}</option>
+                    )}
+                </select>
+                <div>
+                    <h4>Select Participants</h4>
+                    {members.map(m => (
+                        <div key={m.id}>
+                            <label>
+                                <input
+                                type="checkbox"
+                                onChange={() => toggleUser(m.id)}
+                                />
+                                {m.name}
+                            </label>
+                        </div>
+                    ))}
+                </div>
                 <button onClick={handleSubmit}>Create</button>
             </div>
 
