@@ -4,13 +4,17 @@ import Navbar from "../components/Navbar";
 
 export default function Payments() {
     const [debts, setDepts] = useState([]);
-    useEffect(() => {
+    const load = () => {
         api.get("/payments/my")
-        .then(res => {
-            console.log(res.data);
-            setDepts(res.data.data)})
-            .catch(() => alert("Error loading paymanets"));
+        .then(res => setDepts(res.data.data));
+    };
+    useEffect(() => {
+        load();
     }, []);
+    const pay = async (id) => {
+        await api.patch(`/payments/share/${id}/pay`);
+        load();
+    }
     return (
         <>
         <Navbar/>
@@ -20,6 +24,11 @@ export default function Payments() {
                 <div className = "card" key={d.id}>
                     <strong>{d.amount} </strong>
                     <p>Status: {d.status}</p>
+                    {d.status === "UNPAID" && (
+                        <button onClick={() => pay(d.id)}>
+                            Mark as paid
+                        </button>
+                    )}
                 </div>
             ))}
         </div>
