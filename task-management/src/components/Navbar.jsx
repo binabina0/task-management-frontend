@@ -13,7 +13,8 @@ export default function Navbar() {
       <Link to="/payments" style={{ marginRight: 10, color: "white" }}>Payments</Link>
       <Link to="/create-task" style={{ marginRight: 10, color: "white" }}>+ Task</Link>
       <Link to="/create-payment" style={{ marginRight: 10, color: "white" }}>+ Payment</Link>
-
+      <Link to="/groups" style={{ marginRight: 10, color: "white" }}>Groups</Link>
+      <Link to="/create-group" style={{ marginRight: 10, color: "white" }}>+Group</Link>
       <button onClick={logout} style={{ float: "right" }}>
         Logout
       </button>

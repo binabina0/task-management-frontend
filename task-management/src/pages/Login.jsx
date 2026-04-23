@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import api from "../api/api";
 import { AuthContext } from "../auth/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
     const { login } = useContext(AuthContext);
     const [email, setEmail] = useState("");
@@ -28,6 +28,7 @@ export default function Login() {
             <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
             <input placeholder="Password" type="password" onChange={e => setPassword(e.target.value)} />
             <button onClick={handleLogin} >Login</button>
+            <p>No account? <Link to="/register">Register</Link></p>
         </div>
     )
 }
